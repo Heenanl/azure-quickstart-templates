@@ -115,69 +115,69 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-11-01' = {
 
 }
 
-resource privateLinkApi 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'privatelink.api.azureml.ms'
-  location: 'global'
-  tags: {}
-  properties: {}
-}
+// resource privateLinkApi 'Microsoft.Network/privateDnsZones@2020-06-01' = {
+//   name: 'privatelink.api.azureml.ms'
+//   location: 'global'
+//   tags: {}
+//   properties: {}
+// }
 
-resource privateLinkNotebooks 'Microsoft.Network/privateDnsZones@2020-06-01' = {
-  name: 'privatelink.notebooks.azure.net'
-  location: 'global'
-  tags: {}
-  properties: {}
-}
+// resource privateLinkNotebooks 'Microsoft.Network/privateDnsZones@2020-06-01' = {
+//   name: 'privatelink.notebooks.azure.net'
+//   location: 'global'
+//   tags: {}
+//   properties: {}
+// }
 
-resource vnetLinkApi 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateLinkApi
-  name: '${uniqueString(vnetResourceId)}-api'
-  location: 'global'
-  properties: {
-    virtualNetwork: {
-      id: vnetResourceId
-    }
-    registrationEnabled: false
-  }
-}
+// resource vnetLinkApi 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
+//   parent: privateLinkApi
+//   name: '${uniqueString(vnetResourceId)}-api'
+//   location: 'global'
+//   properties: {
+//     virtualNetwork: {
+//       id: vnetResourceId
+//     }
+//     registrationEnabled: false
+//   }
+// }
 
-resource vnetLinkNotebooks 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
-  parent: privateLinkNotebooks
-  name: '${uniqueString(vnetResourceId)}-notebooks'
-  location: 'global'
-  properties: {
-    virtualNetwork: {
-      id: vnetResourceId
-    }
-    registrationEnabled: false
-  }
-}
+// resource vnetLinkNotebooks 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01' = {
+//   parent: privateLinkNotebooks
+//   name: '${uniqueString(vnetResourceId)}-notebooks'
+//   location: 'global'
+//   properties: {
+//     virtualNetwork: {
+//       id: vnetResourceId
+//     }
+//     registrationEnabled: false
+//   }
+// }
 
 
 
-resource dnsZoneGroupamlWorkspace 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-11-01' = {
-  parent: privateEndpoint
-  name: 'default'
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'privatelink-api-azureml-ms'
-        properties: {
-            privateDnsZoneId: privateLinkApi.id
-        }
-      }
-      {
-        name: 'privatelink-notebooks-azure-net'
-        properties: {
-            privateDnsZoneId: privateLinkNotebooks.id
-        }
-      }
-    ]
-  }
-  dependsOn: [
-    vnetLinkApi
-    vnetLinkNotebooks
-  ]
-}
+// resource dnsZoneGroupamlWorkspace 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-11-01' = {
+//   parent: privateEndpoint
+//   name: 'default'
+//   properties: {
+//     privateDnsZoneConfigs: [
+//       {
+//         name: 'privatelink-api-azureml-ms'
+//         properties: {
+//             privateDnsZoneId: privateLinkApi.id
+//         }
+//       }
+//       {
+//         name: 'privatelink-notebooks-azure-net'
+//         properties: {
+//             privateDnsZoneId: privateLinkNotebooks.id
+//         }
+//       }
+//     ]
+//   }
+//   dependsOn: [
+//     vnetLinkApi
+//     vnetLinkNotebooks
+//   ]
+// }
 
 output amlWorkspaceID string = amlWorkspace.id
