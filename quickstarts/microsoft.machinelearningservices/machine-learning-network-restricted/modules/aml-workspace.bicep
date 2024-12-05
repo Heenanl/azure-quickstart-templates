@@ -155,29 +155,29 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-11-01' = {
 
 
 
-// resource dnsZoneGroupamlWorkspace 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-11-01' = {
-//   parent: privateEndpoint
-//   name: 'default'
-//   properties: {
-//     privateDnsZoneConfigs: [
-//       {
-//         name: 'privatelink-api-azureml-ms'
-//         properties: {
-//             privateDnsZoneId: privateLinkApi.id
-//         }
-//       }
-//       {
-//         name: 'privatelink-notebooks-azure-net'
-//         properties: {
-//             privateDnsZoneId: privateLinkNotebooks.id
-//         }
-//       }
-//     ]
-//   }
-//   dependsOn: [
-//     vnetLinkApi
-//     vnetLinkNotebooks
-//   ]
-// }
+resource dnsZoneGroupamlWorkspace 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2023-11-01' = {
+  parent: privateEndpoint
+  name: 'default'
+  properties: {
+    privateDnsZoneConfigs: [
+      {
+        name: 'privatelink-api-azureml-ms'
+        properties: {
+            privateDnsZoneId: privateLinkApi.id // /subscriptions/5bef918d-59f1-49d6-897b-919e5d5c05a0/resourceGroups/dns-rg/providers/Microsoft.Network/privateDnsZones/private.damen.com
+        }
+      }
+      {
+        name: 'privatelink-notebooks-azure-net'
+        properties: {
+            privateDnsZoneId: privateLinkNotebooks.id // /subscriptions/5bef918d-59f1-49d6-897b-919e5d5c05a0/resourceGroups/dns-rg/providers/Microsoft.Network/privateDnsZones/private.damen.com
+        }
+      }
+    ]
+  }
+  // dependsOn: [
+  //   vnetLinkApi
+  //   vnetLinkNotebooks
+  // ]
+}
 
 output amlWorkspaceID string = amlWorkspace.id
